@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+## Author : Aditya Shakya (adi1090x)
+## Mail : adi1090x@gmail.com
+## Github : @adi1090x
+## Reddit : @adi1090x
+
+# Options
+shutdown="Apagar"
+reboot="Reiniciar"
+lock="Bloquear pantalla"
+suspend="Suspender"
+logout="Cerrar sesión"
+
+# Variable passed to rofi
+options="$lock\n$logout\n$shutdown\n$reboot\n$suspend"
+menuname=Salir
+
+chosen="$(echo -e "$options" | rofi -dmenu -selected-row 2 -p $menuname)"
+case $chosen in
+    $shutdown)
+        systemctl poweroff
+        ;;
+    $reboot)
+        systemctl reboot
+        ;;
+    $lock)
+        dm-tool lock
+        ;;
+    $suspend)
+        systemctl suspend
+        ;;
+    $logout)
+        i3-msg exit
+        ;;
+esac
